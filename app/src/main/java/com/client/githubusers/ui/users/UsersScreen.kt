@@ -15,7 +15,7 @@ import com.client.githubusers.ui.users.components.UsersItem
 import org.koin.compose.koinInject
 
 @Composable
-fun UsersRoute(
+internal fun UsersRoute(
     viewModel: UsersViewModel = koinInject()
 ) {
     val usersState by viewModel.users.collectAsStateWithLifecycle()

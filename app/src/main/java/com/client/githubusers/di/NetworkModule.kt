@@ -15,20 +15,21 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val networkModule = module {
     factory { provideOkHttpClient(appContext = androidContext(), get(), get()) }
     factory { provideRetrofit(get()) }
-    single { OfflineInterceptor(appContext = androidContext()) }
-    single { OnlineInterceptor() }
+
+    factory { provideUsersApi(get()) }
+    factory { OfflineInterceptor(appContext = androidContext()) }
+    factory { OnlineInterceptor() }
 }
 
-fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-    return Retrofit
-        .Builder()
+private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    return Retrofit.Builder()
         .baseUrl(BuildConfig.API_URL)
-        .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create())
+        .client(okHttpClient)
         .build()
 }
 
-fun provideOkHttpClient(
+private fun provideOkHttpClient(
     appContext: Context,
     onlineInterceptor: OnlineInterceptor,
     offlineInterceptor: OfflineInterceptor
@@ -43,4 +44,4 @@ fun provideOkHttpClient(
         .build()
 }
 
-fun provideUsersApi(retrofit: Retrofit): UsersApi = retrofit.create(UsersApi::class.java)
+private fun provideUsersApi(retrofit: Retrofit): UsersApi = retrofit.create(UsersApi::class.java)

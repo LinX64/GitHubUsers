@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.client.githubusers.data.model.UserItem
 import com.client.githubusers.data.repository.UsersRepository
+import com.client.githubusers.data.util.NetworkResult
 import com.client.githubusers.data.util.NetworkResult.Error
 import com.client.githubusers.data.util.NetworkResult.Loading
 import com.client.githubusers.data.util.NetworkResult.Success
@@ -19,18 +20,18 @@ class UsersViewModel(
 
     val users: StateFlow<UsersState> = usersRepository.getUsers()
         .asResult()
-        .map { result ->
-            when (result) {
-                is Loading -> UsersState.Loading
-                is Success -> UsersState.Success(result.data)
-                is Error -> UsersState.Error(result.exception?.message ?: "An error occurred")
-            }
-        }
+        .map(::mapToUser)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = UsersState.Loading
         )
+
+    private fun mapToUser(result: NetworkResult<List<UserItem>>) = when (result) {
+        is Loading -> UsersState.Loading
+        is Success -> UsersState.Success(result.data)
+        is Error -> UsersState.Error(result.exception?.message ?: "An error occurred")
+    }
 }
 
 sealed interface UsersState {
