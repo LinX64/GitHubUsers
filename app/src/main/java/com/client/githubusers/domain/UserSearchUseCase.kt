@@ -1,16 +1,14 @@
 package com.client.githubusers.domain
 
 import com.client.githubusers.data.model.UserItem
-import com.client.githubusers.data.model.UsersResponse
 
 class UserSearchUseCase {
 
     operator fun invoke(
         query: String,
-        users: List<UsersResponse>
+        users: List<UserItem>
     ): List<UserItem> {
-        val usersItems = users.flatten()
-        val filteredUsers = usersItems.filter { user ->
+        val filteredUsers = users.filter { user ->
             user.login.contains(query, ignoreCase = true)
         }
         return filteredUsers

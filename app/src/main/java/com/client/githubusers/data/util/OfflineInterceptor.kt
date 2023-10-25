@@ -11,7 +11,7 @@ class OfflineInterceptor(private val appContext: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         if (!isInternetAvailable(appContext)) {
-            val maxStale = 60 * 60 * 24 * 30
+            val maxStale = 60
             request = request.newBuilder()
                 .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
                 .removeHeader("Pragma")

@@ -3,7 +3,7 @@ package com.client.githubusers.ui.views.users
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.client.githubusers.data.model.UsersResponse
+import com.client.githubusers.data.model.UserItem
 import com.client.githubusers.data.repository.UsersRepository
 import com.client.githubusers.data.util.NetworkResult
 import com.client.githubusers.data.util.asResult
@@ -54,23 +54,22 @@ class UserSearchViewModel(
 
     private fun mapToUiState(
         query: String,
-        result: NetworkResult<List<UsersResponse>>
-    ) =
-        when (result) {
-            is NetworkResult.Loading -> SearchUiState.Loading
-            is NetworkResult.Success -> {
-                if (result.data.isEmpty()) SearchUiState.Error("Empty response")
-                else handleUsersResponse(query, result.data)
-            }
-
-            is NetworkResult.Error -> SearchUiState.Error(
-                result.exception?.message ?: "An error occurred"
-            )
+        result: NetworkResult<List<UserItem>>
+    ) = when (result) {
+        is NetworkResult.Loading -> SearchUiState.Loading
+        is NetworkResult.Success -> {
+            if (result.data.isEmpty()) SearchUiState.Error("Empty response")
+            else handleUsersResponse(query, result.data)
         }
+
+        is NetworkResult.Error -> SearchUiState.Error(
+            result.exception?.message ?: "An error occurred"
+        )
+    }
 
     private fun handleUsersResponse(
         query: String,
-        usersResponse: List<UsersResponse>
+        usersResponse: List<UserItem>
     ): SearchUiState {
         val filteredUsers = userSearchUseCase(query = query, users = usersResponse)
         return if (filteredUsers.isEmpty()) SearchUiState.EmptyResponse

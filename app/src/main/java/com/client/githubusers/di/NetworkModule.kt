@@ -32,8 +32,8 @@ private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
 
     return Retrofit.Builder()
         .baseUrl(BuildConfig.API_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(okHttpClient)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 }
 
@@ -42,12 +42,13 @@ private fun provideOkHttpClient(
     onlineInterceptor: OnlineInterceptor,
     offlineInterceptor: OfflineInterceptor
 ): OkHttpClient {
-    val cacheSize = (5 * 1024 * 1024).toLong()
-    val myCache = Cache(appContext.cacheDir, cacheSize)
 
     val loggingInterceptor = HttpLoggingInterceptor().apply {
         setLevel(HttpLoggingInterceptor.Level.BASIC)
     }
+
+    val cacheSize = (5 * 1024 * 1024).toLong()
+    val myCache = Cache(appContext.cacheDir, cacheSize)
 
     return OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)

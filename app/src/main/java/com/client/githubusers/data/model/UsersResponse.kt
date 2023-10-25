@@ -3,8 +3,6 @@ package com.client.githubusers.data.model
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-class UsersResponse : ArrayList<UserItem>()
-
 @JsonClass(generateAdapter = true)
 data class UserItem(
     @Json(name = "avatar_url")

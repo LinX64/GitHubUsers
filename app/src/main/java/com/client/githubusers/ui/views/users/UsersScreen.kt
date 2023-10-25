@@ -1,5 +1,6 @@
 package com.client.githubusers.ui.views.users
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +36,22 @@ internal fun UsersScreen(
         isSearchViewActive = { shouldTheTextBeShown.value = !it },
         onClear = onClear
     )
+
+    when (searchResultState) {
+        is SearchUiState.Error -> {
+            Text(text = "Error ${searchResultState.error}")
+        }
+
+        is SearchUiState.Success -> {
+            Text(text = "Success ${searchResultState.users}")
+        }
+
+        is SearchUiState.Loading -> {
+            Text(text = "Loading")
+        }
+
+        else -> Unit
+    }
 
 }
 
