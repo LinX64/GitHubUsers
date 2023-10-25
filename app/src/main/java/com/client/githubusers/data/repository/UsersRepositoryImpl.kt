@@ -18,7 +18,7 @@ class UsersRepositoryImpl(
     }.flowOn(Dispatchers.IO)
 
     override fun getUserDetailsByName(name: String): Flow<UserDetailResponse> = flow {
-        val user = usersApi.getUserDetailsByName(name)
+        val user = usersApi.getUserDetails(name)
         emit(user)
     }.flowOn(Dispatchers.IO)
 }

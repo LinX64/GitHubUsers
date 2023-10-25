@@ -1,22 +1,22 @@
 package com.client.githubusers.data.model
-import com.squareup.moshi.JsonClass
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class UserDetailResponse(
     @Json(name = "avatar_url")
     val avatarUrl: String,
     @Json(name = "bio")
-    val bio: Any,
+    val bio: Any? = null,
     @Json(name = "blog")
     val blog: String,
     @Json(name = "company")
-    val company: String,
+    val company: String? = null,
     @Json(name = "created_at")
     val createdAt: String,
     @Json(name = "email")
-    val email: Any,
+    val email: Any? = null,
     @Json(name = "events_url")
     val eventsUrl: String,
     @Json(name = "followers")
@@ -32,7 +32,7 @@ data class UserDetailResponse(
     @Json(name = "gravatar_id")
     val gravatarId: String,
     @Json(name = "hireable")
-    val hireable: Any,
+    val hireable: Any? = null,
     @Json(name = "html_url")
     val htmlUrl: String,
     @Json(name = "id")
@@ -62,7 +62,7 @@ data class UserDetailResponse(
     @Json(name = "subscriptions_url")
     val subscriptionsUrl: String,
     @Json(name = "twitter_username")
-    val twitterUsername: String,
+    val twitterUsername: String? = null,
     @Json(name = "type")
     val type: String,
     @Json(name = "updated_at")
