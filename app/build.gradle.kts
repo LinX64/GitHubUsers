@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
@@ -65,12 +67,15 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.ui)
+    implementation(libs.compose.navigation)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
 
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+
+    implementation(libs.coil)
 
     implementation(libs.retrofit)
     implementation(libs.okhttp)

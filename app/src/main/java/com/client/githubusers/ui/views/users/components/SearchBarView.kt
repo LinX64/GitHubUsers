@@ -19,64 +19,41 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.isContainer
+import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.client.githubusers.ui.views.users.SearchUiState
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 fun SearchBarView(
     modifier: Modifier = Modifier,
     searchUiState: SearchUiState,
+    isSearchBarActive: (Boolean) -> Unit = {},
     onSearchClick: (String) -> Unit,
-    isSearchViewActive: (Boolean) -> Unit,
+    onItemClick: (String) -> Unit,
     onClear: () -> Unit
 ) {
     val query = remember { mutableStateOf("") }
     val isQueryEmpty = query.value.isEmpty()
     var active by rememberSaveable { mutableStateOf(false) }
-
-    val focusRequester = remember { FocusRequester() }
-    val keyboardController = LocalSoftwareKeyboardController.current
-
-    val onSearchExplicitlyTriggered = {
-        keyboardController?.hide()
-        onSearchClick(query.value)
-    }
+    val showShouldLoading = remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .focusRequester(focusRequester)
-            .onKeyEvent { keyEvent ->
-                if (keyEvent.key == Key.Enter) {
-                    onSearchExplicitlyTriggered()
-                    true
-                } else {
-                    false
-                }
-            }
-            .semantics { contentDescription = "SearchScreen"; isContainer = true }
+            .semantics { contentDescription = "SearchScreen"; isTraversalGroup = true }
     ) {
         SearchBar(
             modifier = modifier
@@ -99,7 +76,7 @@ fun SearchBarView(
                     })
                 }
             },
-            active = active.also(isSearchViewActive),
+            active = active.also(isSearchBarActive),
             onActiveChange = { active = it },
             colors = SearchBarDefaults.colors(
                 dividerColor = Color.Transparent
@@ -111,30 +88,52 @@ fun SearchBarView(
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                onboardingView(searchUiState)
+                onboardingView(searchUiState = searchUiState, onItemClick = onItemClick)
+            }
+
+            if (showShouldLoading.value) {
+                LoadingDots()
             }
         }
 
         Spacer(modifier = Modifier.padding(16.dp))
 
-        LaunchedEffect(Unit) {
-            focusRequester.requestFocus()
+        if (searchUiState is SearchUiState.Loading) {
+            showShouldLoading.value = true
+        }
+
+        if (searchUiState !is SearchUiState.Loading) {
+            showShouldLoading.value = false
         }
     }
 }
 
-private fun LazyGridScope.onboardingView(searchUiState: SearchUiState) = when (searchUiState) {
+private fun LazyGridScope.onboardingView(
+    searchUiState: SearchUiState,
+    onItemClick: (String) -> Unit
+) = when (searchUiState) {
     is SearchUiState.Loading,
     is SearchUiState.EmptyQuery,
     is SearchUiState.SearchNotReady -> Unit
 
     is SearchUiState.Success -> {
-        /*items(count = searchUiState.tokens.size) { index ->
-            TokenRow(token = searchUiState.tokens[index])
-        }*/
+        val users = searchUiState.users
+        items(users.size) { index ->
+            UserItem(user = users[index], onItemClick = { onItemClick(users[index].login) })
+        }
     }
 
-    else -> Unit
+    is SearchUiState.EmptyResponse -> {
+        item {
+            EmptyResponseView()
+        }
+    }
+
+    is SearchUiState.Error -> {
+        item {
+            ErrorView()
+        }
+    }
 }
 
 @Composable
@@ -164,6 +163,6 @@ private fun SearchBarViewPreview() {
     SearchBarView(
         searchUiState = SearchUiState.EmptyResponse,
         onSearchClick = {},
-        isSearchViewActive = {},
+        onItemClick = {}
     ) {}
 }

@@ -18,9 +18,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+
+private const val SEARCH_QUERY = "searchQuery"
 
 class UserSearchViewModel(
     private val savedStateHandle: SavedStateHandle,
@@ -45,11 +46,9 @@ class UserSearchViewModel(
         )
 
     private fun makeTheCall(query: String): Flow<SearchUiState> {
-        usersRepository.getUsers()
+        return usersRepository.getUsers()
             .asResult()
             .map { mapToUiState(query, it) }
-            .launchIn(viewModelScope)
-        return flowOf(SearchUiState.Loading)
     }
 
     private fun mapToUiState(
@@ -59,24 +58,15 @@ class UserSearchViewModel(
         is NetworkResult.Loading -> SearchUiState.Loading
         is NetworkResult.Success -> {
             if (result.data.isEmpty()) SearchUiState.Error("Empty response")
-            else handleUsersResponse(query, result.data)
+            else {
+                val filteredUsers = userSearchUseCase(query = query, users = result.data)
+                if (filteredUsers.isEmpty()) SearchUiState.EmptyResponse
+                else SearchUiState.Success(filteredUsers)
+            }
         }
 
-        is NetworkResult.Error -> SearchUiState.Error(
-            result.exception?.message ?: "An error occurred"
-        )
-    }
-
-    private fun handleUsersResponse(
-        query: String,
-        usersResponse: List<UserItem>
-    ): SearchUiState {
-        val filteredUsers = userSearchUseCase(query = query, users = usersResponse)
-        return if (filteredUsers.isEmpty()) SearchUiState.EmptyResponse
-        else {
-            val users = filteredUsers.map { it.login }
-            println("Users: $users")
-            SearchUiState.Success(users)
+        is NetworkResult.Error -> {
+            SearchUiState.Error(result.exception?.message ?: "An error occurred")
         }
     }
 
@@ -94,8 +84,7 @@ sealed interface SearchUiState {
     object EmptyQuery : SearchUiState
     object EmptyResponse : SearchUiState
     object SearchNotReady : SearchUiState
-    data class Success(val users: List<String>) : SearchUiState
+    data class Success(val users: List<UserItem>) : SearchUiState
     data class Error(val error: String) : SearchUiState
 }
 
-private const val SEARCH_QUERY = "searchQuery"

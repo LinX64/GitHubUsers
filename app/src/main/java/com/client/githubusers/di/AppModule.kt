@@ -8,5 +8,6 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModelOf(::UserSearchViewModel)
+    viewModelOf(::UserSearchViewModel)
     singleOf(::UserSearchUseCase)
 }
