@@ -1,5 +1,6 @@
 package com.client.githubusers.data.model
 
+import com.client.githubusers.ui.views.users.User
 import com.google.gson.annotations.SerializedName
 
 class UsersResponse : ArrayList<UserItem>()
@@ -42,3 +43,26 @@ data class UserItem(
     @SerializedName("url")
     val url: String
 )
+
+fun UserItem.toDomain(): User {
+    return User(
+        avatarUrl = avatarUrl,
+        eventsUrl = eventsUrl,
+        followersUrl = followersUrl,
+        followingUrl = followingUrl,
+        gistsUrl = gistsUrl,
+        gravatarId = gravatarId,
+        htmlUrl = htmlUrl,
+        id = id,
+        login = login,
+        nodeId = nodeId,
+        organizationsUrl = organizationsUrl,
+        receivedEventsUrl = receivedEventsUrl,
+        reposUrl = reposUrl,
+        siteAdmin = siteAdmin,
+        starredUrl = starredUrl,
+        subscriptionsUrl = subscriptionsUrl,
+        type = type,
+        url = url
+    )
+}

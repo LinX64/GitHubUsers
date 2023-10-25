@@ -9,7 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.client.githubusers.ui.users.UsersRoute
+import com.client.githubusers.ui.views.users.UsersRoute
 
 @Composable
 internal fun UsersApp() {

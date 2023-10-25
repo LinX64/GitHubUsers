@@ -75,8 +75,10 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.moshi.converter)
+    implementation(libs.moshi.kotlin)
     implementation(libs.coroutines)
     implementation(libs.gson)
+    implementation(libs.http.logging.interceptor)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
