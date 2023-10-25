@@ -1,4 +1,4 @@
-package com.client.githubusers.ui
+package com.client.githubusers.ui.views
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
