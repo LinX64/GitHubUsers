@@ -27,7 +27,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.client.githubusers.R
 import com.client.githubusers.data.model.UserItem
-import com.client.githubusers.ui.views.util.ViewUtil
+import com.client.githubusers.data.util.StubUtil
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,7 +87,7 @@ internal fun UserItem(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun UserItemPreview() {
-    val user = ViewUtil.getDummyUser()
+    val user = StubUtil.getDummyUser()
     BaseCenterColumn {
         UserItem(user = user)
     }

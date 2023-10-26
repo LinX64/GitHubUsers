@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.client.githubusers.data.util.StubUtil
 import com.client.githubusers.ui.views.userDetail.components.UserDetailContent
 import com.client.githubusers.ui.views.users.components.BaseCenterColumn
 import com.client.githubusers.ui.views.users.components.LoadingDots
-import com.client.githubusers.ui.views.util.ViewUtil
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -49,7 +49,7 @@ internal fun UserDetailScreen(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun UserDetailScreenPreview() {
-    val getUser = ViewUtil.getDummyUserDetail()
+    val getUser = StubUtil.getDummyUserDetail()
     UserDetailScreen(
         userState = UserDetailUiState.Success(
             user = getUser

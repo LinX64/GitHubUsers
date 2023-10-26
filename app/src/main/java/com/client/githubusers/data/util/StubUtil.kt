@@ -1,9 +1,9 @@
-package com.client.githubusers.ui.views.util
+package com.client.githubusers.data.util
 
 import com.client.githubusers.data.model.UserDetailResponse
 import com.client.githubusers.data.model.UserItem
 
-object ViewUtil {
+object StubUtil {
 
     fun getDummyUsers(): List<UserItem> {
         return mutableListOf(

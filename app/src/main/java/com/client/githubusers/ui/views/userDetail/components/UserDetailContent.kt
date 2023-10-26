@@ -29,9 +29,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.client.githubusers.R
 import com.client.githubusers.data.model.UserDetailResponse
+import com.client.githubusers.data.util.StubUtil
 import com.client.githubusers.ui.views.userDetail.UserDetailScreen
 import com.client.githubusers.ui.views.userDetail.UserDetailUiState
-import com.client.githubusers.ui.views.util.ViewUtil
 
 @Composable
 internal fun UserDetailContent(
@@ -228,7 +228,7 @@ private fun RepositoryCard(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun UserDetailContentPreview() {
-    val getUser = ViewUtil.getDummyUserDetail()
+    val getUser = StubUtil.getDummyUserDetail()
     UserDetailScreen(
         userState = UserDetailUiState.Success(
             user = getUser

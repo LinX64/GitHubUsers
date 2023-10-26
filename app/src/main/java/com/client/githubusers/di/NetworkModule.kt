@@ -25,7 +25,7 @@ val networkModule = module {
     singleOf(::provideUsersApi)
 }
 
-private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+internal fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
     val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
@@ -37,7 +37,7 @@ private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         .build()
 }
 
-private fun provideOkHttpClient(
+internal fun provideOkHttpClient(
     appContext: Context,
     onlineInterceptor: OnlineInterceptor,
     offlineInterceptor: OfflineInterceptor
@@ -58,4 +58,4 @@ private fun provideOkHttpClient(
         .build()
 }
 
-private fun provideUsersApi(retrofit: Retrofit): UsersApi = retrofit.create(UsersApi::class.java)
+internal fun provideUsersApi(retrofit: Retrofit): UsersApi = retrofit.create(UsersApi::class.java)

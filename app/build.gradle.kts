@@ -40,11 +40,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -84,6 +84,17 @@ dependencies {
     implementation(libs.coroutines)
     implementation(libs.gson)
     implementation(libs.http.logging.interceptor)
+
+    implementation(libs.kluent)
+    implementation(libs.turbine)
+
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockito)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
