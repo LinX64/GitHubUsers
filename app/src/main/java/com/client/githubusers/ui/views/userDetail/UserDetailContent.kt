@@ -1,9 +1,6 @@
-package com.client.githubusers.ui.views.userDetail.components
+package com.client.githubusers.ui.views.userDetail
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,8 +27,10 @@ import coil.request.ImageRequest
 import com.client.githubusers.R
 import com.client.githubusers.data.model.UserDetailResponse
 import com.client.githubusers.data.util.StubUtil
-import com.client.githubusers.ui.views.userDetail.UserDetailScreen
-import com.client.githubusers.ui.views.userDetail.UserDetailUiState
+import com.client.githubusers.ui.views.userDetail.components.CompanyRow
+import com.client.githubusers.ui.views.userDetail.components.FollowersRow
+import com.client.githubusers.ui.views.userDetail.components.FollowingRow
+import com.client.githubusers.ui.views.userDetail.components.LocationRow
 
 @Composable
 internal fun UserDetailContent(
@@ -113,83 +112,6 @@ private fun TopSection(
                 style = MaterialTheme.typography.bodyMedium
             )
         }
-    }
-}
-
-@Composable
-private fun FollowingRow(user: UserDetailResponse) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(R.drawable.baseline_compare_arrows_24),
-            contentDescription = null
-        )
-
-        Text(
-            text = user.followers.toString(),
-            style = MaterialTheme.typography.bodyMedium
-        )
-    }
-}
-
-@Composable
-private fun FollowersRow(user: UserDetailResponse) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(R.drawable.baseline_arrow_upward_24),
-            contentDescription = null
-        )
-
-        Text(
-            text = user.followers.toString(),
-            style = MaterialTheme.typography.bodyMedium
-        )
-    }
-}
-
-@Composable
-private fun CompanyRow(user: UserDetailResponse) {
-    val shouldShowCompany = user.company != null
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(R.drawable.baseline_apartment_24),
-            contentDescription = null
-        )
-
-        if (shouldShowCompany) {
-            user.company?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun LocationRow(user: UserDetailResponse) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(R.drawable.baseline_location_on_24),
-            contentDescription = null
-        )
-
-        Text(
-            text = user.location,
-            style = MaterialTheme.typography.bodyMedium
-        )
     }
 }
 

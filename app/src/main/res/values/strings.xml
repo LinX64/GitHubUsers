@@ -2,4 +2,12 @@
     <string name="app_name">GitHubUsers</string>
     <string name="repositories">Repositories</string>
     <string name="view_repositories">View Repositories</string>
+    <string name="github_users">GitHub Users</string>
+    <string name="user_detail">User Detail</string>
+    <string name="please_enter_a_user_name">Please enter a user name</string>
+    <string name="i_e_john_doe">i.e. John Doe</string>
+    <string name="no_results_found">No results found!</string>
+    <string name="something_went_wrong">Something went wrong, please try again or check your internet connection</string>
+    <string name="search">Search...</string>
+    <string name="back">Back</string>
 </resources>

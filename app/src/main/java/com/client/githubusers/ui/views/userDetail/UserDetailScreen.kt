@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.client.githubusers.data.util.StubUtil
-import com.client.githubusers.ui.views.userDetail.components.UserDetailContent
 import com.client.githubusers.ui.views.users.components.BaseCenterColumn
 import com.client.githubusers.ui.views.users.components.LoadingDots
 import org.koin.androidx.compose.koinViewModel

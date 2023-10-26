@@ -20,9 +20,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import com.client.githubusers.R
 import com.client.githubusers.ui.navigation.AppNavHost
 import com.client.githubusers.ui.navigation.AppState
 import com.client.githubusers.ui.navigation.NavRoutes
@@ -65,12 +67,12 @@ fun AppTopBar(
         title = {
             if (currentDestination?.route == NavRoutes.usersScreen) {
                 Text(
-                    text = "GitHub Users",
+                    text = stringResource(R.string.github_users),
                     fontWeight = FontWeight.Bold
                 )
             } else {
                 Text(
-                    text = "User Detail",
+                    text = stringResource(R.string.user_detail),
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -82,7 +84,7 @@ fun AppTopBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back"
+                        contentDescription = stringResource(R.string.back)
                     )
                 }
             }
