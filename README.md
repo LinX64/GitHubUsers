@@ -2,7 +2,15 @@
 
 ## Introduction
 
-This is a sample project for dealing with GitHub APIs (more specifically, the [GitHub Users API](https://docs.github.com/en/rest/reference/users)). This project was built 100% using Jetpack Compose and the MVVM architecture.
+This is a sample project for dealing with GitHub APIs (more specifically,
+the [GitHub Users API](https://docs.github.com/en/rest/reference/users)). This project was built
+100% using Jetpack Compose and the MVVM architecture.
+
+The only issue with the `/users` endpoint is that it doesn't return all users from GitHub. It is
+the limitation of the API. It only returns the first 30 users per page, as it is using pagination.
+
+**TODO:** One solution to that is
+using: [Search Users API](https://docs.github.com/en/rest/reference/search#search-users)
 
 ## Features
 
