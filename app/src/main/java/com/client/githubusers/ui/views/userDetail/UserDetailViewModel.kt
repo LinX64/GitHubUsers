@@ -49,7 +49,7 @@ class UserDetailViewModel(
 }
 
 sealed interface UserDetailUiState {
-    object Loading : UserDetailUiState
+    data object Loading : UserDetailUiState
     data class Success(val user: UserDetailResponse) : UserDetailUiState
     data class Error(val message: String) : UserDetailUiState
 }

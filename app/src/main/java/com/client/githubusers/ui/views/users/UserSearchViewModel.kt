@@ -80,10 +80,10 @@ class UserSearchViewModel(
 }
 
 sealed interface SearchUiState {
-    object Loading : SearchUiState
-    object EmptyQuery : SearchUiState
-    object EmptyResponse : SearchUiState
-    object SearchNotReady : SearchUiState
+    data object Loading : SearchUiState
+    data object EmptyQuery : SearchUiState
+    data object EmptyResponse : SearchUiState
+    data object SearchNotReady : SearchUiState
     data class Success(val users: List<UserItem>) : SearchUiState
     data class Error(val error: String) : SearchUiState
 }
